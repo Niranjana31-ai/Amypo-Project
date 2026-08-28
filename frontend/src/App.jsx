@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Navbar from './components/layout/Navbar.jsx';
 import Login from './components/Login.jsx';
@@ -23,21 +23,31 @@ const Dashboard = () => {
   return <StatCards />;
 };
 
+const AUTH_PATHS = ['/login', '/register'];
+
 export default function App() {
+  const { isAuthenticated } = useSelector((s) => s.auth);
+  const location = useLocation();
+  const isAuthPage = AUTH_PATHS.includes(location.pathname);
+  const showSidebar = isAuthenticated && !isAuthPage;
+
   return (
-    <>
-      <Navbar />
-      <div className="main-content">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-          <Route path="/projects" element={<PrivateRoute><ProjectList /></PrivateRoute>} />
-          <Route path="/projects/:projectId/tasks" element={<PrivateRoute><TaskList /></PrivateRoute>} />
-          <Route path="/team" element={<PrivateRoute><TeamWorkload /></PrivateRoute>} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+    <div className={showSidebar ? 'app-layout' : ''}>
+      {showSidebar && <Navbar />}
+      <div className={showSidebar ? 'app-main' : ''}>
+        {showSidebar && <div className="mobile-topbar-spacer" />}
+        <div className={showSidebar ? 'main-content' : ''}>
+          <Routes>
+            <Route path="/login"    element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/"         element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            <Route path="/projects" element={<PrivateRoute><ProjectList /></PrivateRoute>} />
+            <Route path="/projects/:projectId/tasks" element={<PrivateRoute><TaskList /></PrivateRoute>} />
+            <Route path="/team"     element={<PrivateRoute><TeamWorkload /></PrivateRoute>} />
+            <Route path="*"         element={<Navigate to="/" />} />
+          </Routes>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
