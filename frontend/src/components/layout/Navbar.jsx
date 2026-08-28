@@ -63,15 +63,7 @@ const Navbar = () => {
           </NavLink>
         ))}
 
-        <span className="sidebar-section-label" style={{ marginTop: 8 }}>Other</span>
-        <button className="sidebar-item" disabled style={{ opacity: 0.45, cursor: 'default' }}>
-          <Icon d="M18 20V10M12 20V4M6 20v-6" size={17} />
-          Reports
-        </button>
-        <button className="sidebar-item" disabled style={{ opacity: 0.45, cursor: 'default' }}>
-          <Icon d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" size={17} />
-          Settings
-        </button>
+
       </nav>
 
       <div className="sidebar-footer">
