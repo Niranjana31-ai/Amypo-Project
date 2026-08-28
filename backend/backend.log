@@ -64,3 +64,4 @@
 2026-08-28T18:49:28.649+05:30  INFO 15352 --- [demo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2026-08-28T18:49:28.649+05:30  INFO 15352 --- [demo] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
 2026-08-28T18:49:35.689+05:30  INFO 15352 --- [demo] [nio-8080-exec-2] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 630 ms
+2026-08-28T20:31:05.338+05:30  WARN 15352 --- [demo] [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=43m59s685ms483µs800ns).
