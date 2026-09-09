@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import CapacityBar from '../common/CapacityBar';
 
@@ -30,6 +31,7 @@ const greeting = () => {
 };
 
 const StakeholderDashboard = () => {
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [progressMap, setProgressMap] = useState({});
   const [loading, setLoading] = useState(true);
@@ -126,6 +128,9 @@ const StakeholderDashboard = () => {
       <div className="dashboard-section">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <h3 style={{ fontSize: 'var(--font-size-lg)', fontWeight: 600 }}>Portfolio Overview</h3>
+          <button className="btn btn-sm btn-outline" onClick={() => navigate('/recent-projects')}>
+            Explore More →
+          </button>
         </div>
         {projects.length === 0 ? (
           <div className="empty-state">

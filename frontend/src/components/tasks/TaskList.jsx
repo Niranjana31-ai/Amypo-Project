@@ -98,7 +98,14 @@ const TaskList = () => {
                           <select
                             value={t.status}
                             onChange={(e) => handleStatusChange(t.id, e.target.value)}
-                            style={{ padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)', fontSize: '0.85rem' }}
+                            style={{
+                              padding: '4px 8px',
+                              borderRadius: 6,
+                              border: '1px solid var(--border)',
+                              fontSize: '0.85rem',
+                              background: 'var(--surface)',
+                              color: 'var(--text-primary)',
+                            }}
                           >
                             {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
                           </select>

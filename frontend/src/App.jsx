@@ -10,6 +10,8 @@ import TeamWorkload from './components/team/TeamWorkload.jsx';
 import MemberDashboard from './components/dashboard/MemberDashboard.jsx';
 import StakeholderDashboard from './components/dashboard/StakeholderDashboard.jsx';
 import StatCards from './components/dashboard/StatCards.jsx';
+import RecentProjects from './components/projects/RecentProjects.jsx';
+import RecentTasks from './components/tasks/RecentTasks.jsx';
 
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated } = useSelector((s) => s.auth);
@@ -40,10 +42,12 @@ export default function App() {
           <Routes>
             <Route path="/login"    element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/"         element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-            <Route path="/projects" element={<PrivateRoute><ProjectList /></PrivateRoute>} />
+            <Route path="/"                 element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            <Route path="/recent-projects"  element={<PrivateRoute><RecentProjects /></PrivateRoute>} />
+            <Route path="/recent-tasks"     element={<PrivateRoute><RecentTasks /></PrivateRoute>} />
+            <Route path="/projects"         element={<PrivateRoute><ProjectList /></PrivateRoute>} />
             <Route path="/projects/:projectId/tasks" element={<PrivateRoute><TaskList /></PrivateRoute>} />
-            <Route path="/team"     element={<PrivateRoute><TeamWorkload /></PrivateRoute>} />
+            <Route path="/team"             element={<PrivateRoute><TeamWorkload /></PrivateRoute>} />
             <Route path="*"         element={<Navigate to="/" />} />
           </Routes>
         </div>

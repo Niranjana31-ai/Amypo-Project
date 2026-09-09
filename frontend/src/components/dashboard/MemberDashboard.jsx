@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import CapacityBar from '../common/CapacityBar';
 
@@ -17,6 +18,7 @@ const greeting = () => {
 };
 
 const MemberDashboard = () => {
+  const navigate = useNavigate();
   const [activeTasks, setActiveTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -98,7 +100,12 @@ const MemberDashboard = () => {
         </div>
 
         <div className="card">
-          <div className="card-header"><h3>Upcoming Deadlines</h3></div>
+          <div className="card-header">
+            <h3>Upcoming Deadlines</h3>
+            <button className="btn btn-sm btn-outline" onClick={() => navigate('/recent-tasks')}>
+              Explore More →
+            </button>
+          </div>
           <div className="card-body">
             {upcoming.length === 0 ? (
               <p style={{ color: 'var(--text-muted)', fontSize: 'var(--font-size-sm)', textAlign: 'center', padding: '16px 0' }}>

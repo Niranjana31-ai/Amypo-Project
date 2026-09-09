@@ -30,10 +30,10 @@ const STAT_CONFIG = [
 ];
 
 const STATUS_BARS = [
-  { key: 'inProgress', label: 'In Progress', color: '#2563eb' },
-  { key: 'inTesting',  label: 'In Testing',  color: '#d97706' },
-  { key: 'completed',  label: 'Completed',   color: '#16a34a' },
-  { key: 'backlog',    label: 'Backlog',      color: '#dc2626' },
+  { key: 'inProgress', label: 'In Progress', color: '#5B5CE2' },
+  { key: 'inTesting',  label: 'In Testing',  color: '#f59e0b' },
+  { key: 'completed',  label: 'Completed',   color: '#10b981' },
+  { key: 'backlog',    label: 'Backlog',      color: '#ef4444' },
 ];
 
 const StatCards = () => {
@@ -168,7 +168,9 @@ const StatCards = () => {
         <div className="card">
           <div className="card-header">
             <h3>Recent Projects</h3>
-            <button className="btn btn-sm btn-secondary" onClick={() => navigate('/projects')}>View all</button>
+            <button className="btn btn-sm btn-outline" onClick={() => navigate('/recent-projects')}>
+              Explore More →
+            </button>
           </div>
           <div className="card-body">
             {recentProjects.length === 0 ? (
@@ -208,7 +210,9 @@ const StatCards = () => {
       <div className="dashboard-section">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <h3 style={{ fontSize: 'var(--font-size-lg)', fontWeight: 600 }}>Recent Tasks</h3>
-          <button className="btn btn-sm btn-secondary" onClick={() => navigate('/projects')}>View projects</button>
+          <button className="btn btn-sm btn-outline" onClick={() => navigate('/recent-tasks')}>
+            Explore More →
+          </button>
         </div>
         {recentTasks.length === 0 ? (
           <div className="empty-state" style={{ padding: '32px 24px' }}>
