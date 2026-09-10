@@ -208,6 +208,18 @@ const RecentProjects = () => {
                         >
                           View Tasks →
                         </button>
+                        {isCoordinator && p.status !== 'ARCHIVED' && (
+                          <button
+                            className="btn btn-sm btn-danger"
+                            onClick={async () => {
+                              if (!window.confirm('Archive this project?')) return;
+                              await projectService.archiveProject(p.id);
+                              dispatch(fetchProjects());
+                            }}
+                          >
+                            Archive
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
