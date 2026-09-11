@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchProjects, updateProjectStatus } from '../../store/slices/projectSlice';
@@ -18,19 +18,32 @@ const ProjectList = () => {
 
   const isCoordinator = user?.role === 'PROJECT_COORDINATOR';
 
+  // Stable key so the progress effect only re-runs when project IDs actually change
+  const projectIds = useMemo(() => items.map((p) => p.id).join(','), [items]);
+
   useEffect(() => {
     dispatch(fetchProjects());
   }, [dispatch]);
 
   useEffect(() => {
+    if (!projectIds) return;
     items.forEach(async (p) => {
       try {
         const res = await projectService.getProgress(p.id);
-        setProgressData((prev) => ({ ...prev, [p.id]: res.data }));
-        if (res.data?.status) dispatch(updateProjectStatus({ id: p.id, status: res.data.status }));
-      } catch (_) {}
+        const data = res.data;
+        const pct =
+          data?.completionPercentage ??
+          data?.completion_percentage ??
+          data?.percentage ??
+          0;
+        setProgressData((prev) => ({ ...prev, [p.id]: { ...data, completionPercentage: pct } }));
+        if (data?.status) dispatch(updateProjectStatus({ id: p.id, status: data.status }));
+      } catch (err) {
+        console.error(`Failed to fetch progress for project ${p.id}:`, err);
+      }
     });
-  }, [items.length, dispatch]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectIds, dispatch]);
 
   const handleArchive = async (id) => {
     if (!window.confirm('Archive this project?')) return;
@@ -76,7 +89,9 @@ const ProjectList = () => {
             <tbody>
               {items.map((p) => {
                 const prog = progressData[p.id];
-                const pct = prog?.completionPercentage ?? 0;
+                const pct = p.status === 'COMPLETED'
+                  ? 100
+                  : prog?.completionPercentage ?? 0;
                 return (
                   <tr key={p.id} className="task-row">
                     <td>{p.name}</td>

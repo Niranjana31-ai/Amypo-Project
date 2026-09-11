@@ -59,7 +59,8 @@ const RecentProjects = () => {
   const completedCount = projects.filter((p) => p.status === 'COMPLETED').length;
   const archivedCount = projects.filter((p) => p.status === 'ARCHIVED').length;
 
-  const totalProgressSum = projects.reduce((acc, p) => acc + (progressMap[p.id] ?? 0), 0);
+  const getEffectivePct = (p) => p.status === 'COMPLETED' ? 100 : (progressMap[p.id] ?? 0);
+  const totalProgressSum = projects.reduce((acc, p) => acc + getEffectivePct(p), 0);
   const avgProgress = projects.length > 0 ? Math.round(totalProgressSum / projects.length) : 0;
 
   if (loading && projects.length === 0) {
@@ -167,7 +168,7 @@ const RecentProjects = () => {
             </thead>
             <tbody>
               {filteredProjects.map((p) => {
-                const pct = progressMap[p.id] ?? 0;
+                const pct = p.status === 'COMPLETED' ? 100 : (progressMap[p.id] ?? 0);
                 return (
                   <tr key={p.id} className="task-row">
                     <td>

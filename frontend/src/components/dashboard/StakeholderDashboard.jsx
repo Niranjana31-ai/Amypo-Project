@@ -58,19 +58,21 @@ const StakeholderDashboard = () => {
 
   if (loading) return <div className="spinner-wrap"><div className="spinner" /></div>;
 
+  const getEffectivePct = (p) => p.status === 'COMPLETED' ? 100 : (progressMap[p.id]?.completionPercentage ?? 0);
+
   const onTrack = projects.filter((p) => {
-    const pct = progressMap[p.id]?.completionPercentage ?? 0;
+    const pct = getEffectivePct(p);
     return calculateHealth(p, pct) === 'ON TRACK';
   }).length;
 
   const atRisk = projects.filter((p) => {
-    const pct = progressMap[p.id]?.completionPercentage ?? 0;
+    const pct = getEffectivePct(p);
     const h = calculateHealth(p, pct);
     return h === 'AT RISK' || h === 'NEEDS ATTENTION';
   }).length;
 
   const completed = projects.filter((p) => {
-    const pct = progressMap[p.id]?.completionPercentage ?? 0;
+    const pct = getEffectivePct(p);
     return calculateHealth(p, pct) === 'COMPLETED';
   }).length;
 
@@ -152,7 +154,7 @@ const StakeholderDashboard = () => {
               </thead>
               <tbody>
                 {projects.map((p) => {
-                  const pct = progressMap[p.id]?.completionPercentage ?? 0;
+                  const pct = getEffectivePct(p);
                   const health = calculateHealth(p, pct);
                   return (
                     <tr key={p.id} className="task-row">
