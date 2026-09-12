@@ -56,7 +56,7 @@ public class ProjectController {
     public ResponseEntity<Map<String, Object>> getProgress(@PathVariable Long id) {
         double completion = projectService.calculateCompletionPercentage(id);
         ProjectStatus status = projectService.getProjectStatus(id);
-        return ResponseEntity.ok(Map.of("completion", completion, "status", status));
+        return ResponseEntity.ok(Map.of("completionPercentage", completion, "status", status));
     }
 
 }

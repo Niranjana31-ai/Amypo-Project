@@ -58,7 +58,7 @@ const StakeholderDashboard = () => {
 
   if (loading) return <div className="spinner-wrap"><div className="spinner" /></div>;
 
-  const getEffectivePct = (p) => p.status === 'COMPLETED' ? 100 : (progressMap[p.id]?.completionPercentage ?? 0);
+  const getEffectivePct = (p) => (p.status === 'COMPLETED' || p.status === 'ARCHIVED') ? 100 : (progressMap[p.id]?.completionPercentage ?? 0);
 
   const onTrack = projects.filter((p) => {
     const pct = getEffectivePct(p);
